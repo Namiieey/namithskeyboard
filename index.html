@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="A personal keyboard ownership declaration by Namith RN. If you have found this instrument, contact the owner directly." />
+  <meta name="theme-color" content="#050505" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>This Keyboard by Namith | Keyboard Ownership</title>
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #050505;
+      color: #FFFFFF;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: inherit;
+    }
+    :focus-visible {
+      outline: 2px solid #FF6B00;
+      outline-offset: 3px;
+    }
+
+    /* ========== TYPOGRAPHY ========== */
+    .text-reveal {
+      overflow: hidden;
+    }
+    .word, .char {
+      display: inline-block;
+      will-change: transform, opacity;
+    }
+
+    /* ========== HERO ========== */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: #050505;
+    }
+    #hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    #hero video.is-ready {
+      opacity: 1;
+    }
+    #hero .hero-fallback {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, #151515 0%, #050505 70%);
+    }
+
+    /* ========== SECTIONS ========== */
+    section {
+      position: relative;
+      width: 100%;
+      padding: clamp(4rem, 12vw, 8rem) clamp(1.25rem, 5vw, 4rem);
+    }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Section 1 — The Reveal */
+    #reveal {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050505;
+      text-align: center;
+    }
+    #reveal .line {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #B8B8B8, transparent);
+      margin: 0 auto 2.5rem;
+    }
+    #reveal h1 {
+      font-size: clamp(1.75rem, 5.5vw, 3.75rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: #FFFFFF;
+    }
+    #reveal h1 .word {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    /* Section 2 — The Instrument */
+    #instrument {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050505;
+      text-align: center;
+    }
+    #instrument .mask-text {
+      font-size: clamp(1.5rem, 4.5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.015em;
+      line-height: 1.35;
+      color: #FFFFFF;
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+    }
+    #instrument .mask-text span {
+      display: block;
+      transform: translateY(110%);
+    }
+    #instrument .decor-line {
+      width: 60px;
+      height: 1px;
+      background: #FF6B00;
+      margin: 2rem auto 0;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: center;
+    }
+
+    /* Section 3 — Owner */
+    #owner {
+      background: #050505;
+      padding-top: clamp(5rem, 14vw, 9rem);
+      padding-bottom: clamp(5rem, 14vw, 9rem);
+    }
+    .owner-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(2.5rem, 6vw, 4rem);
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .owner-grid {
+        grid-template-columns: 1fr 1.1fr;
+        gap: clamp(3rem, 7vw, 5rem);
+      }
+    }
+    .owner-photo-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      aspect-ratio: 4 / 5;
+      background: #101010;
+    }
+    .owner-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transform: scale(1.05);
+      will-change: transform;
+    }
+    .owner-photo-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(5,5,5,0.35) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .owner-content {
+      text-align: left;
+    }
+    .owner-name {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .owner-tagline {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: #B8B8B8;
+      font-weight: 400;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .owner-statement {
+      font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+      font-weight: 300;
+      line-height: 1.6;
+      color: #E8E8E8;
+      max-width: 32ch;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* Section 4 — Ownership */
+    #ownership {
+      background: #050505;
+      padding-top: clamp(4rem, 10vw, 7rem);
+      padding-bottom: clamp(4rem, 10vw, 7rem);
+    }
+    .ownership-panel {
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: clamp(2.25rem, 5vw, 3.5rem);
+      background: rgba(16, 16, 16, 0.85);
+      border: 1px solid rgba(184, 184, 184, 0.12);
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .ownership-panel::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 13px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255,107,0,0.45), transparent 40%, transparent 60%, rgba(184,184,184,0.25));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .ownership-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #FF6B00;
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+    }
+    .ownership-title {
+      font-size: clamp(1.35rem, 3.5vw, 1.85rem);
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .ownership-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: #B8B8B8;
+      font-weight: 300;
+      margin-bottom: 1.75rem;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: #B8B8B8;
+      margin-bottom: 1.75rem;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid rgba(184,184,184,0.2);
+      border-radius: 100px;
+    }
+    .verified-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: #FF6B00;
+    }
+    .ownership-note {
+      font-size: 0.95rem;
+      color: #A0A0A0;
+      line-height: 1.55;
+      max-width: 36ch;
+      margin: 0 auto;
+    }
+
+    /* Section 5 — Contact */
+    #contact {
+      background: #050505;
+      padding-top: clamp(4rem, 10vw, 6rem);
+      padding-bottom: clamp(4rem, 10vw, 6rem);
+    }
+    .contact-inner {
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-heading {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+    }
+    .contact-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    @media (min-width: 480px) {
+      .contact-actions {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      min-height: 52px;
+      padding: 0.85rem 1.5rem;
+      border: 1px solid rgba(184, 184, 184, 0.25);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 450;
+      letter-spacing: 0.01em;
+      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+      background: rgba(16, 16, 16, 0.6);
+    }
+    .contact-btn:hover,
+    .contact-btn:focus-visible {
+      background: rgba(255, 107, 0, 0.12);
+      border-color: rgba(255, 107, 0, 0.5);
+      color: #FFFFFF;
+    }
+    .contact-btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+    .contact-btn.whatsapp {
+      border-color: rgba(37, 211, 102, 0.3);
+    }
+    .contact-btn.whatsapp:hover,
+    .contact-btn.whatsapp:focus-visible {
+      background: rgba(37, 211, 102, 0.1);
+      border-color: rgba(37, 211, 102, 0.55);
+    }
+    .contact-meta {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #808080;
+    }
+    .contact-meta a {
+      color: #B8B8B8;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .contact-meta a:hover {
+      color: #FFFFFF;
+    }
+
+    /* Section 6 — Final */
+    #final {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #050505;
+      padding-top: clamp(5rem, 12vw, 8rem);
+      padding-bottom: clamp(3rem, 8vw, 5rem);
+    }
+    #final .final-phrase {
+      font-size: clamp(1.75rem, 5vw, 3.25rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    #final .final-sub {
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      color: #B8B8B8;
+      font-weight: 300;
+      margin-bottom: 2.75rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    #final .final-line {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #FF6B00, transparent);
+      margin: 0 auto 2.5rem;
+    }
+    .btn-contact-owner {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0.75rem 1.75rem;
+      border: 1px solid rgba(255, 107, 0, 0.5);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #FF6B00;
+      transition: background 0.25s ease, color 0.25s ease;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .btn-contact-owner:hover,
+    .btn-contact-owner:focus-visible {
+      background: #FF6B00;
+      color: #050505;
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.75rem;
+      color: #555;
+      letter-spacing: 0.02em;
+      opacity: 0;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      #hero video { opacity: 1; }
+      #reveal h1 .word,
+      #instrument .mask-text span,
+      .owner-name, .owner-tagline, .owner-statement,
+      #final .final-phrase, #final .final-sub, .btn-contact-owner, footer {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      #reveal .line, #instrument .decor-line, #final .final-line {
+        width: 80px !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+
+    /* Fallback when JS fails: ensure content is visible */
+    .no-js #reveal h1 .word,
+    .no-js #instrument .mask-text span,
+    .no-js .owner-name, .no-js .owner-tagline, .no-js .owner-statement,
+    .no-js #final .final-phrase, .no-js #final .final-sub, .no-js .btn-contact-owner, .no-js footer {
+      opacity: 1;
+      transform: none;
+    }
+    .no-js #reveal .line, .no-js #instrument .decor-line, .no-js #final .final-line {
+      width: 80px;
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body class="no-js">
+  <!-- ========== HERO — pure cinematic video, no text ========== -->
+  <section id="hero" aria-label="Cinematic introduction">
+    <div class="hero-fallback" aria-hidden="true"></div>
+    <video
+      id="hero-video"
+      src="https://files.catbox.moe/5o69lr.mp4"
+      muted
+      loop
+      playsinline
+      autoplay
+      preload="auto"
+      aria-hidden="true"
+    ></video>
+  </section>
+
+  <!-- ========== SECTION 1 — The Reveal ========== -->
+  <section id="reveal" aria-label="Introduction">
+    <div class="section-inner">
+      <div class="line" aria-hidden="true"></div>
+      <h1 class="text-reveal" id="reveal-heading">
+        <span class="word">Some</span>
+        <span class="word">things</span>
+        <span class="word">are</span>
+        <span class="word">more</span>
+        <span class="word">than</span>
+        <span class="word">instruments.</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 2 — The Instrument ========== -->
+  <section id="instrument" aria-label="The instrument">
+    <div class="section-inner">
+      <p class="mask-text">
+        <span>Built for music. Owned by Namith.</span>
+      </p>
+      <div class="decor-line" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 3 — Owner Reveal ========== -->
+  <section id="owner" aria-label="Owner">
+    <div class="section-inner owner-grid">
+      <div class="owner-photo-wrap">
+        <img
+          src="https://plain-apac-prod-public.komododecks.com/202610/10/xeNXT7AzxbFHHxMUAGbr/image.jpg"
+          alt="Portrait of Namith RN"
+          width="800"
+          height="1000"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="owner-content">
+        <h2 class="owner-name">NAMITH RN</h2>
+        <p class="owner-tagline">Developer. Singer. Musician.</p>
+        <p class="owner-statement">This keyboard is part of my musical journey. If you’ve found this instrument, you’ve found its owner.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 4 — Ownership Verification ========== -->
+  <section id="ownership" aria-label="Instrument ownership declaration">
+    <div class="section-inner">
+      <div class="ownership-panel">
+        <p class="ownership-label">Instrument Ownership</p>
+        <h2 class="ownership-title">This keyboard belongs to Namith RN.</h2>
+        <p class="ownership-subtitle">This Keyboard by Namith.</p>
+        <div class="verified-badge" role="status">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Personal ownership declaration
+        </div>
+        <p class="ownership-note">If you have found this keyboard, please contact the owner using the details below.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 5 — Contact ========== -->
+  <section id="contact" aria-label="Contact the owner">
+    <div class="contact-inner">
+      <h2 class="contact-heading">Contact the Owner</h2>
+      <div class="contact-actions">
+        <a class="contact-btn" href="tel:8301835198" aria-label="Call Namith at 8301835198">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          Call Owner
+        </a>
+        <a class="contact-btn" href="mailto:namithrn1980@gmail.com" aria-label="Email Namith at namithrn1980@gmail.com">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Email Owner
+        </a>
+        <a class="contact-btn whatsapp" href="https://wa.me/918301835198" target="_blank" rel="noopener noreferrer" aria-label="Message Namith on WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <p class="contact-meta">
+        <a href="tel:8301835198">8301835198</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:namithrn1980@gmail.com">namithrn1980@gmail.com</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 6 — Final ========== -->
+  <section id="final" aria-label="Closing statement">
+    <p class="final-phrase">This keyboard by Namith.</p>
+    <p class="final-sub">Music connects us. Ownership identifies it.</p>
+    <div class="final-line" aria-hidden="true"></div>
+    <a class="btn-contact-owner" href="#contact">Contact Owner</a>
+    <footer>© 2026 Namith RN. Personal instrument ownership declaration.</footer>
+  </section>
+
+  <!-- GSAP + ScrollTrigger from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    (function () {
+      document.body.classList.remove("no-js");
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // ---------- Hero video fade-in ----------
+      const video = document.getElementById("hero-video");
+      if (video) {
+        const showVideo = () => video.classList.add("is-ready");
+        if (video.readyState >= 2) {
+          showVideo();
+        } else {
+          video.addEventListener("loadeddata", showVideo, { once: true });
+          video.addEventListener("canplay", showVideo, { once: true });
+        }
+        // Ensure play attempt (some browsers need user gesture; muted helps)
+        video.play().catch(() => {});
+      }
+
+      // ---------- Ownership deep-link (#ownership) ----------
+      function scrollToOwnershipIfNeeded() {
+        if (window.location.hash === "#ownership") {
+          const target = document.getElementById("ownership");
+          if (target) {
+            // Small delay so layout is ready
+            requestAnimationFrame(() => {
+              target.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
+            });
+          }
+        }
+      }
+      // Run after load and on hash change
+      if (document.readyState === "complete") {
+        scrollToOwnershipIfNeeded();
+      } else {
+        window.addEventListener("load", scrollToOwnershipIfNeeded);
+      }
+      window.addEventListener("hashchange", scrollToOwnershipIfNeeded);
+
+      // ---------- GSAP animations (skip if reduced motion or GSAP missing) ----------
+      if (prefersReduced || typeof gsap === "undefined") {
+        // Ensure all animated elements are visible
+        document.querySelectorAll(".word, .mask-text span, .owner-name, .owner-tagline, .owner-statement, .final-phrase, .final-sub, .btn-contact-owner, footer").forEach(el => {
+          el.style.opacity = "1";
+          el.style.transform = "none";
+        });
+        document.querySelectorAll(".line, .decor-line, .final-line").forEach(el => {
+          el.style.width = "80px";
+          el.style.opacity = "1";
+          el.style.transform = "none";
+        });
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero scale + fade on scroll
+      gsap.to("#hero video", {
+        scale: 1.15,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+
+      // Reveal line + words
+      gsap.to("#reveal .line", {
+        width: "80px",
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#reveal",
+          start: "top 75%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      gsap.to("#reveal .word", {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#reveal",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Instrument mask reveal
+      gsap.to("#instrument .mask-text span", {
+        y: "0%",
+        duration: 1.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#instrument",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      gsap.to("#instrument .decor-line", {
+        scaleX: 1,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#instrument",
+          start: "top 65%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Owner photo parallax + content reveal
+      gsap.to(".owner-photo-wrap img", {
+        yPercent: -8,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#owner",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+
+      gsap.to(".owner-name", {
+        opacity: 1,
+        y: 0,
+        duration: 0.85,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#owner",
+          start: "top 65%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      gsap.to(".owner-tagline", {
+        opacity: 1,
+        y: 0,
+        duration: 0.85,
+        delay: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#owner",
+          start: "top 65%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      gsap.to(".owner-statement", {
+        opacity: 1,
+        y: 0,
+        duration: 0.85,
+        delay: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#owner",
+          start: "top 65%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Ownership panel gentle entrance
+      gsap.from(".ownership-panel", {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#ownership",
+          start: "top 75%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Final section
+      gsap.to("#final .final-phrase", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#final",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      gsap.to("#final .final-sub", {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        delay: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#final",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      gsap.to("#final .final-line", {
+        width: "100px",
+        duration: 0.9,
+        delay: 0.25,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#final",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      gsap.to(".btn-contact-owner", {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.35,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#final",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      gsap.to("footer", {
+        opacity: 1,
+        duration: 0.8,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: "#final",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
